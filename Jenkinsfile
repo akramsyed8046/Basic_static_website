@@ -24,7 +24,7 @@ stages {
             sh '''
                 aws eks update-kubeconfig \
                     --region ap-south-1 \
-                    --name YOUR-EKS-CLUSTER-NAME
+                    --name Enterprises
             '''
         }
     }
