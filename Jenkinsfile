@@ -29,15 +29,7 @@ stages {
         }
     }
 
-    stage('Verify EKS Connection') {
-        steps {
-            sh '''
-                kubectl config current-context
-                kubectl get nodes
-            '''
-        }
-    }
-
+ 
     stage('Deploy to EKS') {
         steps {
             sh 'kubectl apply -f deployment.yaml'
