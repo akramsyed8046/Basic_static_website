@@ -1,5 +1,6 @@
 pipeline {
 
+
 agent any
 
 stages {
@@ -18,13 +19,32 @@ stages {
         }
     }
 
-    stage('Docker Run'){
-    steps {
-         sh 'docker rm -f static_website || true'
-        sh 'docker run -itd --name static_website -p 8089:80 static-website'
+    stage('Update Kubeconfig') {
+        steps {
+            sh '''
+                aws eks update-kubeconfig \
+                    --region ap-south-1 \
+                    --name YOUR-EKS-CLUSTER-NAME
+            '''
+        }
+    }
+
+    stage('Verify EKS Connection') {
+        steps {
+            sh '''
+                kubectl config current-context
+                kubectl get nodes
+            '''
+        }
+    }
+
+    stage('Deploy to EKS') {
+        steps {
+            sh 'kubectl apply -f deployment.yaml'
+        }
+    }
 
 }
-}
 
-}
+
 }
