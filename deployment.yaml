@@ -1,27 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: static-website
+  name: static-website
 spec:
-replicas: 5
-
-selector:
-matchLabels:
-app: static-website
-
+  replicas: 5
+  selector:
+   matchLabels:
+     app: static-website
 template:
-metadata:
-labels:
-app: static-website
-
+  metadata:
+    labels:
+      app: static-website
 spec:
   containers:
     - name: static-website
       image: static-website
       imagePullPolicy: IfNotPresent
-
       ports:
-        - containerPort: 80
+      - containerPort: 80
 
 
 ---
@@ -29,15 +25,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-name: static-website-service
-
+  name: static-website-service
 spec:
-type: LoadBalancer
-
-selector:
-app: static-website
-
+  type: LoadBalancer
+  selector:
+  app: static-website
 ports:
 - protocol: TCP
-port: 80
-targetPort: 80
+  port: 80
+  targetPort: 80
